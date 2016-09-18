@@ -1,20 +1,31 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Canvas from './Canvas.js';
+import Widget from './Widget.js';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      widgets: [],
+    };
+
+    this.addWidgetOnClick = this.addWidgetOnClick.bind(this);
+  }
+
   render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+    return <Canvas width={ 640 } height={ 480 } widgets={ this.state.widgets } onClick={ this.addWidgetOnClick } />;
+  }
+
+  addWidgetOnClick() {
+    var widgetInfo = {
+      row: Math.floor(Math.random() * 400),
+      col: Math.floor(Math.random() * 600),
+      widget: <Widget />,
+    };
+    this.setState({
+      widgets: this.state.widgets.concat([widgetInfo]),
+    });
   }
 }
 
