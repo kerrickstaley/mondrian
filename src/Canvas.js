@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
+import Widget from './Widget';
 
 class Canvas extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    var onClick;
+    if (this.props.onClick) {
+      onClick = this.props.onClick.bind(this);
+    }
+
     this.state = {
       widgets: [],
+      onClick: onClick,
     };
     this.addWidgetAt = this.addWidgetAt.bind(this);
   }
@@ -19,7 +27,10 @@ class Canvas extends Component {
       return <div style={ containerStyle } key={ index }>{ widget.widget }</div>;
     });
     return (
-      <div className="Canvas" style={{ width: this.props.width + 'px', height: this.props.height + 'px', backgroundColor: '#FCFBE3', position: 'relative' }}>
+      <div
+          className="Canvas"
+          style={{ width: this.props.width + 'px', height: this.props.height + 'px', backgroundColor: '#FCFBE3', position: 'relative' }}
+          onClick={ this.state.onClick }>
         { widgetsInContainers }
       </div>
     );

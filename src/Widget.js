@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 class Widget extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       color: this.getRandomColor(),
     };
