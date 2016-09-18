@@ -17,10 +17,11 @@ class App extends Component {
     return <Canvas width={ 640 } height={ 480 } widgets={ this.state.widgets } onClick={ this.addWidgetOnClick } />;
   }
 
-  addWidgetOnClick() {
+  addWidgetOnClick(event) {
+    event.preventDefault();
     var widgetInfo = {
-      row: Math.floor(Math.random() * 400),
-      col: Math.floor(Math.random() * 600),
+      row: event.clientY - 5,
+      col: event.clientX - 5,
       widget: <Widget />,
     };
     this.setState({
