@@ -99,7 +99,7 @@ class Canvas extends Component {
     function tryExpand(rotIdx, widgetPosition, widgetIdx) {
       // we try to expand downwards
       var canvasHeight = rotIdx % 2 ? nextProps.width : nextProps.height;
-      var newR = widgetPosition.row + widgetPosition.height + 1;
+      var newR = widgetPosition.row + widgetPosition.height;
       if (newR >= canvasHeight) {
         return false;
       }
@@ -139,6 +139,8 @@ class Canvas extends Component {
           height: 1,
       });
       this.propagateWidgetPositions(widgetPositions, 0, widgetIdx);
+      pixelToWidgetId[0][newWidget.row][newWidget.col] = widgetIdx;
+      this.propagatePixelToWidgetId(pixelToWidgetId, 0, newWidget.row, newWidget.col);
 
       // try expanding in all directions until we expand 100px or we cannot expand any more
       var expandCount = [0, 0, 0, 0];
