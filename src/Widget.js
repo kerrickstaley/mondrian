@@ -9,7 +9,7 @@ class Widget extends Component {
   }
 
   render() {
-    return <div style={{ width: '10px', height: '10px', backgroundColor: this.state.color, }} />;
+    return <div style={{ width: '100%', height: '100%', backgroundColor: this.state.color, }} />;
   }
 
   getRandomColor() {
