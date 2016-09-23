@@ -26,6 +26,7 @@ class Canvas extends Component {
     this.propagatePixelToWidgetId = this.propagatePixelToWidgetId.bind(this);
     this.propagateWidgetPositions = this.propagateWidgetPositions.bind(this);
     this.positionWidgets = this.positionWidgets.bind(this);
+    this.verifyPixelToWidgetId = this.verifyPixelToWidgetId.bind(this);
 
     // this.positionWidgets(this.props);
   }
@@ -63,6 +64,39 @@ class Canvas extends Component {
       widgetPositions[i][widgetIdx].col = col;
       widgetPositions[i][widgetIdx].width = width;
       widgetPositions[i][widgetIdx].height = height;
+    }
+  }
+
+  verifyPixelToWidgetId() {
+    for (var rotIdx = 0; rotIdx < 4; rotIdx++) {
+      var width = rotIdx % 2 ? this.props.height : this.props.width;
+      var height = rotIdx % 2 ? this.props.width : this.props.height;
+      var scratch = [];
+      for (var r = 0; r < height; r++) {
+        scratch[r] = [];
+        for (var c = 0; c < width; c++) {
+          scratch[r][c] = -1;
+        }
+      }
+
+      this.state.widgetPositions[rotIdx].forEach((widget, widgetIdx) => {
+        for (var r = widget.row; r < widget.row + widget.height; r++) {
+          for (var c = widget.col; c < widget.col + widget.width; c++) {
+            if (scratch[r][c] != -1) {
+              console.log('pixelToWidgetId error: rotIdx ' + rotIdx + ' row ' + r + ' col ' + c + ' has two widgets: ' + scratch[r][c] + ' and ' + widgetIdx);
+            }
+            scratch[r][c] = widgetIdx;
+          }
+        }
+      });
+
+      for (var r = 0; r < height; r++) {
+        for (var c = 0; c < width; c++) {
+          if (scratch[r][c] != this.state.pixelToWidgetId[rotIdx][r][c]) {
+            console.log('pixelToWidgetId error: rotIdx ' + rotIdx + ' row ' + r + ' col ' + c + ' has incorrect value: expected ' + scratch[r][c] + ' actual ' + this.state.pixelToWidgetId[rotIdx][r][c]);
+          }
+        }
+      }
     }
   }
 
