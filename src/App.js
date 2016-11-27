@@ -20,8 +20,8 @@ class App extends Component {
   addWidgetOnClick(event) {
     event.preventDefault();
     var widgetInfo = {
-      row: event.clientY - 5,
-      col: event.clientX - 5,
+      row: event.clientY,
+      col: event.clientX,
       widget: <Widget />,
     };
     this.setState({
