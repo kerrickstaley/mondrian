@@ -22,8 +22,8 @@ class App extends Component {
     event.preventDefault();
     var canvasBounds = ReactDOM.findDOMNode(this).getBoundingClientRect();
     var widgetInfo = {
-      row: event.clientY - canvasBounds.top,
-      col: event.pageX - canvasBounds.left,
+      row: event.clientY - Math.floor(canvasBounds.top),
+      col: event.pageX - Math.floor(canvasBounds.left),
       widget: <Widget />,
     };
     this.setState({
