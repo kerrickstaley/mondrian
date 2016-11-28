@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import Canvas from './Canvas.js';
 import Widget from './Widget.js';
 
@@ -19,9 +20,10 @@ class App extends Component {
 
   addWidgetOnClick(event) {
     event.preventDefault();
+    var canvasBounds = ReactDOM.findDOMNode(this).getBoundingClientRect();
     var widgetInfo = {
-      row: event.clientY,
-      col: event.clientX,
+      row: event.clientY - canvasBounds.top,
+      col: event.pageX - canvasBounds.left,
       widget: <Widget />,
     };
     this.setState({
