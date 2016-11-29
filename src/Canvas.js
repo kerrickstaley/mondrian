@@ -218,7 +218,7 @@ class Canvas extends Component {
 }
 
 Canvas.defaultProps = {
-  borderWidth: 5,
+  borderWidth: 2,
 };
 
 export default Canvas;
