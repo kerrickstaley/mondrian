@@ -197,7 +197,6 @@ class Canvas extends Component {
       // try expanding in all directions until we expand 100px or we cannot expand any more
       var expandCount = [0, 0, 0, 0];
       while (expandCount.some(val => val <= 100)) {
-        console.log(expandCount);
         for (var i = 0; i < 4; i++) {
           if (expandCount[i] <= 100) {
             if (tryExpand(i, widgetPositions[i][widgetIdx], widgetIdx)) {
