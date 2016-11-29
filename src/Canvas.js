@@ -101,22 +101,40 @@ class Canvas extends Component {
   }
 
   render() {
-    var widgetsInContainers = this.props.widgets.map((widget, index) => {
-      var containerStyle = {
-        position: 'absolute',
-        top: this.state.widgetPositions[0][index].row,
-        left: this.state.widgetPositions[0][index].col,
-        width: this.state.widgetPositions[0][index].width,
-        height: this.state.widgetPositions[0][index].height,
-      }
-      return <div style={ containerStyle } key={ index }>{ widget.widget }</div>;
-    });
+    var canvasContent;
+    if (this.props.widgets.length > 0) {
+      // if widgets, render widgets
+      canvasContent = this.props.widgets.map((widget, index) => {
+        var containerStyle = {
+          position: 'absolute',
+          top: this.state.widgetPositions[0][index].row - this.props.borderWidth,
+          left: this.state.widgetPositions[0][index].col - this.props.borderWidth,
+          width: this.state.widgetPositions[0][index].width,
+          height: this.state.widgetPositions[0][index].height,
+        }
+        return <div style={ containerStyle } key={ index }>{ widget.widget }</div>;
+      });
+    } else {
+      // if no widgets, render a prompt that says "click somewhere"
+      canvasContent = (
+        <div style={{ display: 'flex', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{ color: '#AAAAAA', fontSize: '36px' }}>click somewhere</div>
+        </div>
+      );
+    }
     return (
       <div
           className="Canvas"
-          style={{ width: this.props.width + 'px', height: this.props.height + 'px', backgroundColor: '#FCFBE3', position: 'relative' }}
+          style={{
+            width: this.props.width + 'px',
+            height: this.props.height + 'px',
+            backgroundColor: '#FCFBE3',
+            position: 'relative',
+            border: this.props.borderWidth + 'px solid #CCCCCC',
+            boxSizing: 'border-box',
+          }}
           onClick={ this.props.onClick }>
-        { widgetsInContainers }
+        { canvasContent }
       </div>
     );
   }
@@ -199,5 +217,9 @@ class Canvas extends Component {
     });
   }
 }
+
+Canvas.defaultProps = {
+  borderWidth: 5,
+};
 
 export default Canvas;
